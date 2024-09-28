@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<PortEssential>
+  <Location>
+    <City>Port name</City>
+    <Country>country</Country>
+  </Location>
+  <PointsOfInterest>
+    <POI>
+      <POINumber>1</POINumber>
+      <PointOfInterest>h</PointOfInterest>
+      <Distance>h</Distance>
+      <POIDescription>h</POIDescription>
+    </POI>
+    <POI>
+      <POINumber>2</POINumber>
+      <PointOfInterest>h</PointOfInterest>
+      <Distance>h</Distance>
+      <POIDescription>h</POIDescription>
+    </POI>
+    <POI>
+      <POINumber>3</POINumber>
+      <PointOfInterest>h</PointOfInterest>
+      <Distance>h</Distance>
+      <POIDescription>h</POIDescription>
+    </POI>
+  </PointsOfInterest>
+</PortEssential>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Port Essential Tool</title>
+
+  <!-- Google Font for a modern look -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- SortableJS for drag-and-drop functionality -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+
+  <!-- Modern minimalist CSS styling -->
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background-color: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      max-width: 900px;
+      width: 100%;
+    }
+
+    h1 {
+      font-weight: 500;
+      font-size: 1.8em;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #4a4a4a;
+    }
+
+    label {
+      display: block;
+      font-size: 0.9em;
+      margin-bottom: 5px;
+      color: #666;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 0.9em;
+      color: #333;
+      background-color: #f2f2f2;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #3a8ee6;
+      outline: none;
+      background-color: #fff;
+    }
+
+    .poi-section {
+      display: flex;
+      align-items: flex-start;
+      padding: 20px 0;
+      border-bottom: 1px solid #ddd;
+      position: relative;
+    }
+
+    .poi-number {
+      font-size: 1.2em;
+      font-weight: bold;
+      text-align: center;
+      width: 50px;
+      padding-top: 5px;
+    }
+
+    .poi-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .poi-inputs {
+      display: flex;
+      gap: 10px;
+    }
+
+    .poi-inputs input {
+      width: 100%;
+    }
+
+    textarea {
+      resize: none;
+      width: 100%;
+    }
+
+    /* Drag handle */
+    .drag-handle {
+      width: 10px;
+      background-color: #ccc;
+      margin-right: 15px;
+      cursor: grab;
+      height: 100%;
+      border-radius: 6px;
+    }
+
+    .drag-handle:hover {
+      background-color: #aaa;
+    }
+
+    .drag-handle::before {
+      content: '⋮⋮';
+      color: #666;
+      font-size: 18px;
+      display: block;
+      text-align: center;
+    }
+
+    button {
+      background-color: #3a8ee6;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      width: 100%;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-color: #357ac8;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Port Essential Tool</h1>
+    
+    <!-- XML File Upload -->
+    <input type="file" id="xmlUpload" accept=".xml" />
+    <br/><br/>
+
+    <form action="/save-as-xml" method="POST" id="portForm">
+      <!-- Location: City and Country -->
+      <label for="city">City</label>
+      <input type="text" id="city" name="city" placeholder="Enter city" required>
+
+      <label for="country">Country</label>
+      <input type="text" id="country" name="country" placeholder="Enter country" required>
+
+      <!-- Points of Interest (draggable) -->
+      <h3>Points of Interest</h3>
+      <div id="poiList">
+        <% for (let i = 1; i <= 10; i++) { %>
+          <div class="poi-section" id="poi<%= i %>">
+            <!-- Drag handle and Numbering -->
+            <div class="drag-handle"></div> <!-- Drag handle -->
+            <div class="poi-number"><%= i %>.</div>
+            
+            <!-- POI Content -->
+            <div class="poi-content">
+              <div class="poi-inputs">
+                <div class="poi-name">
+                  <label for="poiName<%= i %>">Name</label>
+                  <input type="text" id="poiName<%= i %>" name="poiName<%= i %>" placeholder="Enter name">
+                </div>
+
+                <div class="poi-distance">
+                  <label for="poiDistance<%= i %>">Distance</label>
+                  <input type="text" id="poiDistance<%= i %>" name="poiDistance<%= i %>" placeholder="Enter distance">
+                </div>
+              </div>
+
+              <div class="poi-description">
+                <label for="poiDescription<%= i %>">Description</label>
+                <textarea id="poiDescription<%= i %>" name="poiDescription<%= i %>" rows="3" placeholder="Enter description"></textarea>
+              </div>
+            </div>
+          </div>
+        <% } %>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit">Save as XML</button>
+    </form>
+  </div>
+
+  <!-- Script to initialize SortableJS and renumber the items -->
+  <script>
+    const poiList = document.getElementById('poiList');
+    console.log('poiList element:', poiList); // Debugging log
+
+    // Initialize SortableJS
+    const sortable = new Sortable(poiList, {
+      animation: 150,
+      ghostClass: 'sortable-ghost',
+      handle: '.drag-handle', // Only the drag handle triggers the dragging
+      onEnd: function () {
+        renumberPOIs();
+      }
+    });
+
+    // Function to renumber the POI items
+    function renumberPOIs() {
+      const poiNumbers = document.querySelectorAll('.poi-number');
+      poiNumbers.forEach((number, index) => {
+        number.textContent = (index + 1) + '.'; // Update the number based on the order
+      });
+    }
+
+    // Initial renumbering
+    renumberPOIs();
+
+    // Handling XML File Upload
+    document.getElementById('xmlUpload').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(e.target.result, "text/xml");
+
+        // Populate City and Country fields
+        document.getElementById('city').value = xmlDoc.getElementsByTagName('City')[0].textContent;
+        document.getElementById('country').value = xmlDoc.getElementsByTagName('Country')[0].textContent;
+
+        // Populate POIs
+        const pois = xmlDoc.getElementsByTagName('POI');
+        for (let i = 0; i < pois.length; i++) {
+          document.getElementById(`poiName${i + 1}`).value = pois[i].getElementsByTagName('PointOfInterest')[0].textContent;
+          document.getElementById(`poiDistance${i + 1}`).value = pois[i].getElementsByTagName('Distance')[0].textContent;
+          document.getElementById(`poiDescription${i + 1}`).value = pois[i].getElementsByTagName('POIDescription')[0].textContent;
+        }
+      };
+
+      reader.readAsText(file);
+    });
+
+  </script>
+</body>
+</html>

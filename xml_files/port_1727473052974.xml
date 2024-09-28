@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<PortEssential>
+  <Location>
+    <City>test city</City>
+    <Country>state</Country>
+  </Location>
+  <PointsOfInterest>
+    <POI>
+      <POINumber>test number</POINumber>
+      <PointOfInterest>test name</PointOfInterest>
+      <Distance>test</Distance>
+      <POIDescription>test</POIDescription>
+    </POI>
+    <POI>
+      <POINumber>test number 2</POINumber>
+      <PointOfInterest>test name</PointOfInterest>
+      <Distance>test again test</Distance>
+      <POIDescription>test</POIDescription>
+    </POI>
+  </PointsOfInterest>
+</PortEssential>
