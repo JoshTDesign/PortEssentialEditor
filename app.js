@@ -11,6 +11,9 @@ const port = process.env.PORT || 3000;
 // Middleware to parse form data
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Serve static files from the "public" directory
+app.use(express.static('public'));
+
 // Set view engine as EJS
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
