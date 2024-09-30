@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<PortEssential>
+  <Location>
+    <City>Kona</City>
+    <Country>Hawaii</Country>
+  </Location>
+  <PointsOfInterest>
+    <POI>
+      <POINumber>1</POINumber>
+      <PointOfInterest>Kamakahonu National Historic Landmark</PointOfInterest>
+      <Break>&#x2029;</Break>
+      <Distance>Just off the tender pier miles (NaN km)</Distance>
+      <Break>&#x2029;</Break>
+      <POIDescription>Kamehameha I, who united the Hawaiian Islands, spent his final years implementing some of the most beneficial reforms of his reign while residing here.</POIDescription>
+      <Break>&#x2029;</Break>
+    </POI>
+    <POI>
+      <POINumber>2</POINumber>
+      <PointOfInterest>Hulihe‘e Palace</PointOfInterest>
+      <Break>&#x2029;</Break>
+      <Distance>0.2 miles/ 0.32 km miles (0.32 km)</Distance>
+      <Break>&#x2029;</Break>
+      <POIDescription>Once the vacation residence of Hawaiian royalty, it is now a museum operated by the Daughters of Hawaiʻi showcasing furniture and artifacts of historical significance.</POIDescription>
+      <Break>&#x2029;</Break>
+    </POI>
+    <POI>
+      <POINumber>3</POINumber>
+      <PointOfInterest>Moku‘aikaua Church</PointOfInterest>
+      <Break>&#x2029;</Break>
+      <Distance>0.2 miles/ 0.32 km miles (0.32 km)</Distance>
+      <Break>&#x2029;</Break>
+      <POIDescription>The oldest Christian church in the Hawaiian Islands was completed in 1837. It remains in active use and welcomes the public for tours, showcasing various artifacts.</POIDescription>
+      <Break>&#x2029;</Break>
+    </POI>
+    <POI>
+      <POINumber>4</POINumber>
+      <PointOfInterest>Kona Hawai‘ian Quilt Museum and Gallery</PointOfInterest>
+      <Break>&#x2029;</Break>
+      <Distance>0.3 miles/ 0.4 km miles (0.48 km)</Distance>
+      <Break>&#x2029;</Break>
+      <POIDescription>The sole museum in Hawaii dedicated exclusively to the art and culture of Hawaiian quilting exhibits both vintage and contemporary Hawaiian-style quilts.</POIDescription>
+      <Break>&#x2029;</Break>
+    </POI>
+    <POI>
+      <POINumber>5</POINumber>
+      <PointOfInterest>Kona Farmers Market</PointOfInterest>
+      <Break>&#x2029;</Break>
+      <Distance>0.5 miles/ 0.8 km miles (0.80 km)</Distance>
+      <Break>&#x2029;</Break>
+      <POIDescription>Offering a diverse range of products, from fresh fruits, vegetables, and coffee to flowers, artisanal wood carvings, and more.</POIDescription>
+      <Break>&#x2029;</Break>
+    </POI>
+    <POI>
+      <POINumber>6</POINumber>
+      <PointOfInterest>Captain James Cook Monument</PointOfInterest>
+      <Break>&#x2029;</Break>
+      <Distance>13 miles/20 km miles (20.92 km)</Distance>
+      <Break>&#x2029;</Break>
+      <POIDescription>A 27-foot-high obelisk, marking the site where British explorer Captain Cook met his end in 1779.</POIDescription>
+      <Break>&#x2029;</Break>
+    </POI>
+    <POI>
+      <POINumber>7</POINumber>
+      <PointOfInterest>Bay View Farm</PointOfInterest>
+      <Break>&#x2029;</Break>
+      <Distance>17 miles/ 27 km miles (27.36 km)</Distance>
+      <Break>&#x2029;</Break>
+      <POIDescription>100% Hand-Picked Kona Coffee, cultivated on the slopes of Mauna Loa, Hawaii since 1984. Explore the entire coffee process, from cultivation to serving.</POIDescription>
+      <Break>&#x2029;</Break>
+    </POI>
+    <POI>
+      <POINumber>8</POINumber>
+      <PointOfInterest>St. Benedict's - Painted Church</PointOfInterest>
+      <Break>&#x2029;</Break>
+      <Distance>20 miles/32 km miles (32.19 km)</Distance>
+      <Break>&#x2029;</Break>
+      <POIDescription>In 1899, Father John Velghe built and adorned the church without formal training, using house paint on simple wood. His vivid paintings served as tools in an era when few Hawaiians could read.</POIDescription>
+      <Break>&#x2029;</Break>
+    </POI>
+    <POI>
+      <POINumber>9</POINumber>
+      <PointOfInterest>Pu’uhonua o Honaunau National Park</PointOfInterest>
+      <Break>&#x2029;</Break>
+      <Distance>22 miles/35 km miles (35.41 km)</Distance>
+      <Break>&#x2029;</Break>
+      <POIDescription>National Historical Park, where Hawaiians until the early 19th century, who violated a kapu (one of the ancient laws), could escape certain death by seeking refuge in this place of sanctuary, known as puʻuhonua.</POIDescription>
+      <Break>&#x2029;</Break>
+    </POI>
+    <POI>
+      <POINumber>10</POINumber>
+      <PointOfInterest>Hawaiʻi Volcanoes National Park</PointOfInterest>
+      <Break>&#x2029;</Break>
+      <Distance>94 miles/151 km miles (151.28 km)</Distance>
+      <Break>&#x2029;</Break>
+      <POIDescription>Home to two of the world's most active volcanoes—Kīlauea and Mauna Loa—this area is designated as an International Biosphere Reserve and a UNESCO World Heritage Site.</POIDescription>
+      <Break>&#x2029;</Break>
+    </POI>
+  </PointsOfInterest>
+</PortEssential>
