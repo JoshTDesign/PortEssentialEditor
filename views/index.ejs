@@ -25,7 +25,7 @@
     <br/><br/>
 
     <!-- Form for both XML and PDF generation -->
-    <form id="portForm" method="POST">
+    <form id="portForm" method="POST" enctype="multipart/form-data">  <!-- enctype added for file upload -->
       
       <!-- Location: City and Country -->
       <div id="location">
@@ -68,6 +68,12 @@
             </div>
           </div>
         <% } %>
+      </div>
+
+      <!-- PNG File Upload for PDF -->
+      <div class="png-upload">
+        <label for="pngFile">Upload PNG File (for PDF)</label>
+        <input type="file" id="pngFile" name="pngFile" accept="image/png">
       </div>
 
       <!-- Submit Buttons for XML and PDF -->

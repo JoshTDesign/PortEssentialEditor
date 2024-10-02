@@ -1,13 +1,17 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
-const xmlbuilder = require('xmlbuilder');
-const PDFDocument = require('pdfkit'); // Import PDFKit for PDF generation
+const multer = require('multer'); // For handling file uploads
+const { PDFDocument } = require('pdf-lib'); // For creating fillable PDF fields
+const PDFKit = require('pdfkit'); // For generating the main PDF content
 const fs = require('fs');
 const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+// Set up multer for file uploads
+const upload = multer({ dest: 'uploads/' });
 
 // Middleware to parse form data
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -24,76 +28,94 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-// Handle XML generation
-app.post('/save-as-xml', (req, res) => {
+// Handle PDF generation with PNG file and add a fillable text field
+app.post('/save-as-pdf', upload.single('pngFile'), async (req, res) => {
   const formData = req.body;
-  
-  const xml = xmlbuilder.create('PortEssential');
-  
-  // Add Location with City and Country sub-elements
-  const location = xml.ele('Location');
-  location.ele('City', formData.city);
-  location.ele('Country', formData.country);
+  const pngFilePath = req.file ? req.file.path : null; // Path to uploaded PNG file
 
-  // Add Points of Interest (POIs)
-  const pointsOfInterest = xml.ele('PointsOfInterest');
+  // Step 1: Create the initial PDF with PDFKit
+  const pdfPath = path.join(__dirname, `pdf_files/port_essential_${Date.now()}.pdf`);
+  const pdfKitDoc = new PDFKit({ size: 'letter', layout: 'landscape' });
+  const pdfKitStream = fs.createWriteStream(pdfPath);
+
+  pdfKitDoc.pipe(pdfKitStream);
+
+  // Add content to the PDF with PDFKit
+  pdfKitDoc.fontSize(24).text('Port Essential Report', { align: 'center' });
+  pdfKitDoc.moveDown();
+  pdfKitDoc.fontSize(16).text(`City: ${formData.city}`);
+  pdfKitDoc.fontSize(16).text(`Country: ${formData.country}`);
+  pdfKitDoc.moveDown();
+
+  // Add Points of Interest to the PDF
+  pdfKitDoc.fontSize(20).text('Points of Interest:', { underline: true });
   for (let i = 1; i <= 10; i++) {
     if (formData[`poiName${i}`]) {
-      const poi = pointsOfInterest.ele('POI');
-      poi.ele('PointOfInterest', formData[`poiName${i}`]);
-      poi.ele('Distance', formData[`poiDistance${i}`]);
-      poi.ele('POIDescription', formData[`poiDescription${i}`]);
+      pdfKitDoc.fontSize(14).text(`POI ${i}: ${formData[`poiName${i}`]}`);
+      pdfKitDoc.text(`Distance: ${formData[`poiDistance${i}`]}`);
+      pdfKitDoc.text(`Description: ${formData[`poiDescription${i}`]}`);
+      pdfKitDoc.moveDown();
     }
   }
 
-  const xmlString = xml.end({ pretty: true });
+  // Add the uploaded PNG image (if it exists)
+  if (pngFilePath) {
+    pdfKitDoc.addPage();
+    const margin = 9;  // 1/8 inch margin in PDF points
+    const availableWidth = 792 - (2 * margin); // Width of the letter page in landscape - margin
+    const availableHeight = 612 - (2 * margin); // Height of the letter page in landscape - margin
 
-  // Set file name based on city and country
-  const fileName = `${formData.city}_${formData.country}.xml`;
-  res.setHeader('Content-Disposition', `attachment; filename=${fileName}`);
-  res.setHeader('Content-Type', 'application/xml');
-  res.send(xmlString);
-});
-
-// Handle PDF generation
-app.post('/save-as-pdf', (req, res) => {
-  const formData = req.body;
-  
-  const doc = new PDFDocument();
-  const filePath = path.join(__dirname, `pdf_files/port_essential_${Date.now()}.pdf`);
-  const stream = fs.createWriteStream(filePath);
-
-  // Pipe the PDF to the writable stream
-  doc.pipe(stream);
-
-  // Add content to the PDF
-  doc.fontSize(24).text('Port Essential Report', { align: 'center' });
-  doc.moveDown();
-  doc.fontSize(16).text(`City: ${formData.city}`);
-  doc.fontSize(16).text(`Country: ${formData.country}`);
-  doc.moveDown();
-
-  // Add the Points of Interest
-  doc.fontSize(20).text('Points of Interest:', { underline: true });
-  for (let i = 1; i <= 10; i++) {
-    if (formData[`poiName${i}`]) {
-      doc.fontSize(14).text(`POI ${i}: ${formData[`poiName${i}`]}`);
-      doc.text(`Distance: ${formData[`poiDistance${i}`]}`);
-      doc.text(`Description: ${formData[`poiDescription${i}`]}`);
-      doc.moveDown();
-    }
-  }
-
-  doc.end();
-
-  // When the PDF is ready, send it to the user
-  stream.on('finish', () => {
-    res.download(filePath, 'port_essential.pdf', (err) => {
-      if (err) {
-        console.error('Error downloading file:', err);
-        res.status(500).send('Error generating PDF.');
-      }
+    pdfKitDoc.image(pngFilePath, margin, margin, {
+      fit: [availableWidth, availableHeight],
+      align: 'center',
+      valign: 'center'
     });
+  }
+
+  pdfKitDoc.end();
+
+  // Wait for the PDFKit document to finish writing
+  await new Promise((resolve) => pdfKitStream.on('finish', resolve));
+
+  // Step 2: Add a fillable text field using pdf-lib
+  const existingPdfBytes = fs.readFileSync(pdfPath);
+  const pdfDoc = await PDFDocument.load(existingPdfBytes);
+
+  // Add a fillable text field on the first page
+  const form = pdfDoc.getForm();
+  const page = pdfDoc.getPage(0);
+
+  // Add a text field to the first page at the top
+  const textField = form.createTextField('userTextInput');
+    textField.setText('');
+  // Remove the border from the text field
+    textField.setBorderColor(null);
+    textField.setBorderWidth(0);
+    textField.addToPage(page, {
+    x: 50, // Position from the left
+    y: 550, // Position from the bottom (adjust to where you want it)
+    width: 500, // Width of the text field
+    height: 30 // Height of the text field
+  });
+
+  // Save the updated PDF with the text field
+  const pdfBytes = await pdfDoc.save();
+  const finalPdfPath = path.join(__dirname, `pdf_files/final_port_essential_${Date.now()}.pdf`);
+  fs.writeFileSync(finalPdfPath, pdfBytes);
+
+  // Send the updated PDF to the user
+  res.download(finalPdfPath, 'port_essential.pdf', (err) => {
+    if (err) {
+      console.error('Error downloading file:', err);
+      res.status(500).send('Error generating PDF.');
+    } else {
+      // Clean up the uploaded PNG file after the PDF is sent
+      if (pngFilePath) {
+        fs.unlinkSync(pngFilePath);
+      }
+      // Clean up temporary files
+      fs.unlinkSync(pdfPath);
+    }
   });
 });
 
