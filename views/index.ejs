@@ -24,7 +24,8 @@
     <input type="file" id="xmlUpload" accept=".xml" />
     <br/><br/>
 
-    <form action="/save-as-xml" method="POST" id="portForm">
+    <!-- Form for both XML and PDF generation -->
+    <form id="portForm" method="POST">
       
       <!-- Location: City and Country -->
       <div id="location">
@@ -69,8 +70,9 @@
         <% } %>
       </div>
 
-      <!-- Submit Button -->
-      <button type="submit">Save as XML</button>
+      <!-- Submit Buttons for XML and PDF -->
+      <button type="submit" formaction="/save-as-xml">Save as XML</button>
+      <button type="submit" formaction="/save-as-pdf">Save as PDF</button>
     </form>
   </div>
 

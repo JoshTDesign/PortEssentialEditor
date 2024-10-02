@@ -1,186 +1,186 @@
 /* General reset */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  
-  /* Ensure all fonts use the same typeface (Roboto) */
-  body, input, textarea, label, button, h1, h3 {
-    font-family: 'Roboto', sans-serif;
-    color: #333;
-  }
-  
-  /* Background styling */
-  body {
-    background-color: #f5f5f5;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-  }
-  
-  .container {
-    padding: 30px;
-    border-radius: 10px;
-    max-width: 900px;
-    width: 100%;
-  }
-  
-  h1 {
-    font-weight: 500;
-    font-size: 1.8em;
-    margin-bottom: 25px;
-    text-align: left;
-    color: #4a4a4a;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Ensure all fonts use the same typeface (Roboto) */
+body, input, textarea, label, button, h1, h3 {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+}
+
+/* Background styling */
+body {
+  background-color: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 900px;
+  width: 100%;
+}
+
+h1 {
+  font-weight: 500;
+  font-size: 1.8em;
+  margin-bottom: 25px;
+  text-align: left;
+  color: #4a4a4a;
+}
+
+h3 {
+  font-weight: 500;
+  font-size: 1.2 em;
+  margin-bottom: 25px;
+  margin-top: 25px;
+  text-align:left;
+  color: #4a4a4a;
+}
+
+label {
+  display: block;
+  font-size: 0.7em;
+  margin-bottom: 5px;
+  margin-top:0px;
+  color: #666;
+  text-transform: uppercase;
+}
+
+input, textarea {
+  padding: 5px 6px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9em;
+  background-color: #f2f2f2;
+  transition: all 0.3s ease;
+}
+
+input#xmlUpload {
+  width: 300px;
   }
 
-  h3 {
-    font-weight: 500;
-    font-size: 1.2 em;
-    margin-bottom: 25px;
-    margin-top: 25px;
-    text-align:left;
-    color: #4a4a4a;
-  }
-  
-  label {
-    display: block;
-    font-size: 0.7em;
-    margin-bottom: 5px;
-    margin-top:0px;
-    color: #666;
-    text-transform: uppercase;
-  }
-  
-  input, textarea {
-    padding: 5px 6px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 0.9em;
-    background-color: #f2f2f2;
-    transition: all 0.3s ease;
-  }
+input:focus, textarea:focus {
+  border-color: #3a8ee6;
+  outline: none;
+  background-color: #fff;
+}
 
-  input#xmlUpload {
-    width: 300px;
-    }
-  
-  input:focus, textarea:focus {
-    border-color: #3a8ee6;
-    outline: none;
-    background-color: #fff;
-  }
-  
-  /* Top Styling */
-  #location {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
+/* Top Styling */
+#location {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
 
 
-  /* POI Card Styling */
-  .poi-section {
-    display: grid;
-    grid-template-columns: 10px min-content 4fr; /* Min-content for narrow POI number, rest for form fields */
-    gap: 10px;
-    padding: 8px 15px 8px 8px;
-    margin-bottom: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
-  }
-  
-  .poi-section:hover {
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  }
-  
-  /* POI number styling */
-  .poi-number {
-    font-size: .9em;
-    font-weight: bold;
-    text-align: center;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    width: min-content; /* Ensure the column is only as wide as the content */
-  }
-  
-  /* Left column: Name and Distance stacked */
+/* POI Card Styling */
+.poi-section {
+  display: grid;
+  grid-template-columns: 10px min-content 4fr; /* Min-content for narrow POI number, rest for form fields */
+  gap: 10px;
+  padding: 8px 15px 8px 8px;
+  margin-bottom: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.poi-section:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* POI number styling */
+.poi-number {
+  font-size: .9em;
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: min-content; /* Ensure the column is only as wide as the content */
+}
+
+/* Left column: Name and Distance stacked */
 .poi-content {
-    display: grid;
-    grid-template-rows: auto auto; /* Two rows for Name and Distance */
-    gap: 10px;
-    width: 100%; /* Ensure the column fills all available space */
-  }
-  
-  .poi-name, .poi-distance {
-    width: 100%; /* Ensure both the Name and Distance fields take full width */
-  }
-  
-  input {
-    width: 100%; /* Ensure input elements fill their container */
-  }
-  
-  .poi-distance {
-    grid-row: 2;
-    margin-top: 15px;
-  }
-  
-  /* Right column: Description */
-  .poi-description {
-    grid-column: 2;
-    /*grid-row: 1 / span 2; /* Span across two rows */
-  }
-  
-  textarea {
-    width: 100%;
-    height: calc(100% - 60px); /* Stretch to fill available height */
-    min-height: 100px;
-    resize: none;
-  }
-  
-  /* Drag handle styling */
-  .drag-handle {
-    width: 14px;
-    background-color: #f1f1f1;
-    margin-right: 15px;
-    cursor: grab;
-    height: 100%; /* Full height of the POI element */
-    border-radius: 6px;
-  }
-  
-  .drag-handle:hover {
-    background-color: #aaa;
-  }
-  
-  .drag-handle::before {
-    content: '⋮⋮';
-    color: #666;
-    font-size: 15px;
-    display: block;
-    text-align: center;
-    height: 100%; /* Fill the full height */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  button {
-    background-color: #3a8ee6;
-    color: white;
-    padding: 12px;
-    border: none;
-    border-radius: 6px;
-    width: 100%;
-    font-size: 1em;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 20px;
-  }
-  
-  button:hover {
-    background-color: #357ac8;
-  }
+  display: grid;
+  grid-template-rows: auto auto; /* Two rows for Name and Distance */
+  gap: 10px;
+  width: 100%; /* Ensure the column fills all available space */
+}
+
+.poi-name, .poi-distance {
+  width: 100%; /* Ensure both the Name and Distance fields take full width */
+}
+
+input {
+  width: 100%; /* Ensure input elements fill their container */
+}
+
+.poi-distance {
+  grid-row: 2;
+  margin-top: 15px;
+}
+
+/* Right column: Description */
+.poi-description {
+  grid-column: 2;
+  /*grid-row: 1 / span 2; /* Span across two rows */
+}
+
+textarea {
+  width: 100%;
+  height: calc(100% - 60px); /* Stretch to fill available height */
+  min-height: 100px;
+  resize: none;
+}
+
+/* Drag handle styling */
+.drag-handle {
+  width: 14px;
+  background-color: #f1f1f1;
+  margin-right: 15px;
+  cursor: grab;
+  height: 100%; /* Full height of the POI element */
+  border-radius: 6px;
+}
+
+.drag-handle:hover {
+  background-color: #aaa;
+}
+
+.drag-handle::before {
+  content: '⋮⋮';
+  color: #666;
+  font-size: 15px;
+  display: block;
+  text-align: center;
+  height: 100%; /* Fill the full height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button {
+  background-color: #3a8ee6;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  width: 100%;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: #357ac8;
+}
