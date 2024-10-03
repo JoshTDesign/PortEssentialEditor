@@ -40,15 +40,21 @@ app.post('/save-as-pdf', upload.single('pngFile'), async (req, res) => {
 
   pdfKitDoc.pipe(pdfKitStream);
 
+  // Background
+  pdfKitDoc.image('resources/Background.png', 0, 0, {
+    fit: [(792), (612)],
+    align: 'center',
+    valign: 'center'
+  });
+
   // Add content to the PDF with PDFKit
-  pdfKitDoc.fontSize(24).text('Port Essential Report', { align: 'center' });
-  pdfKitDoc.moveDown();
-  pdfKitDoc.fontSize(16).text(`City: ${formData.city}`);
-  pdfKitDoc.fontSize(16).text(`Country: ${formData.country}`);
+  pdfKitDoc.font('fonts/Minion3Display-Regular.otf').fontSize(24).text(`${formData.city}, ${formData.country}`, 414, 62, {
+    width: 360,
+    align: 'left'
+  });
   pdfKitDoc.moveDown();
 
   // Add Points of Interest to the PDF
-  pdfKitDoc.fontSize(20).text('Points of Interest:', { underline: true });
   for (let i = 1; i <= 10; i++) {
     if (formData[`poiName${i}`]) {
       pdfKitDoc.fontSize(14).text(`POI ${i}: ${formData[`poiName${i}`]}`);
@@ -89,8 +95,6 @@ app.post('/save-as-pdf', upload.single('pngFile'), async (req, res) => {
   const textField = form.createTextField('userTextInput');
     textField.setText('');
   // Remove the border from the text field
-    textField.setBorderColor(null);
-    textField.setBorderWidth(0);
     textField.addToPage(page, {
     x: 50, // Position from the left
     y: 550, // Position from the bottom (adjust to where you want it)
